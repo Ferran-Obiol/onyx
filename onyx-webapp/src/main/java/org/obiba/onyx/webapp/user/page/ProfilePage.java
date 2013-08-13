@@ -35,7 +35,11 @@ public class ProfilePage extends BasePage {
 
   private static final Locale FARSI = new Locale("fa");
 
-  public static final Locale[] LOCALS = new Locale[] { Locale.FRENCH, Locale.ENGLISH, FARSI };
+  private static final Locale CATALAN = new Locale("ca");
+
+  private static final Locale SPANISH = new Locale("es");
+  
+  public static final Locale[] LOCALS = new Locale[] { Locale.FRENCH, Locale.ENGLISH, FARSI, CATALAN, SPANISH };
 
   @SpringBean
   private UserService userService;

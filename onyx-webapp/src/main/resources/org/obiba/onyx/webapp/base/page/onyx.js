@@ -253,7 +253,7 @@ var baseLayoutSettings = {
 	},
 	north: {
     minSize: 44,
-		size: 44
+		size: 78
 	}
 }
 

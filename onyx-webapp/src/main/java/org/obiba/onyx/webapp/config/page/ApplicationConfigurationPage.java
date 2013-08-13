@@ -137,7 +137,7 @@ public class ApplicationConfigurationPage extends BasePage {
       TextField administratorEmail = new TextField("email", new PropertyModel(model, "user.email"));
       add(administratorEmail.add(EmailAddressValidator.getInstance()));
 
-      LocaleDropDownChoice ddc = new LocaleDropDownChoice("language", new PropertyModel(model, "user.language"), Arrays.asList(new Locale[] { Locale.FRENCH, Locale.ENGLISH }));
+      LocaleDropDownChoice ddc = new LocaleDropDownChoice("language", new PropertyModel(model, "user.language"), Arrays.asList(new Locale[] { Locale.FRENCH, Locale.ENGLISH, new Locale("ca"), new Locale("es", "ES") }));
       ddc.add(new RequiredFormFieldBehavior());
       add(ddc);
 

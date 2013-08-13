@@ -17,8 +17,8 @@
   </parent>
 
   <modules>
-    <module>instrument-bootstrap</module>
-    <module>instrument-parent</module>
+  <!--  <module>instrument-bootstrap</module>
+    <module>instrument-parent</module>      -->
     <module>jade-core</module>
     <module>jade-remote-api</module>
     <module>jade-remote-server</module>

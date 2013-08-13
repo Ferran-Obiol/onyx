@@ -29,8 +29,8 @@ public class QuestionnaireWizardPanel extends WizardPanel<Questionnaire> {
   @SpringBean
   private ActiveQuestionnaireAdministrationService activeQuestionnaireAdministrationService;
 
-  @SpringBean(name = "activeInterviewService")
-  private ActiveInterviewService activeInterviewService;
+    @SpringBean(name = "activeInterviewService")
+    private ActiveInterviewService activeInterviewService;
 
   private final FeedbackWindow feedbackWindow;
 
@@ -54,10 +54,10 @@ public class QuestionnaireWizardPanel extends WizardPanel<Questionnaire> {
     feedbackWindow.setOutputMarkupId(true);
     add(feedbackWindow);
 
-    WebMarkupContainer interviewDetails = new WebMarkupContainer("interviewDetails");
-    interviewDetails.add(new Label("participant", activeInterviewService.getParticipant().getBarcode()));
-    interviewDetails.add(new Label("user", activeInterviewService.getOperator()));
-    add(interviewDetails);
+        WebMarkupContainer interviewDetails = new WebMarkupContainer("interviewDetails");
+        interviewDetails.add(new Label("participant", activeInterviewService.getParticipant().getBarcode()));
+        interviewDetails.add(new Label("user", activeInterviewService.getOperator()));
+        add(interviewDetails);
   }
 
   //

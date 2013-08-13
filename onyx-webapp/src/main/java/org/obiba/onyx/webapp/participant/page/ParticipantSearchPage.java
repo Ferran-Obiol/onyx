@@ -436,7 +436,7 @@ public class ParticipantSearchPage extends BasePage {
         columns.add(new PropertyColumn<Participant>(new StringResourceModel("EnrollmentId", ParticipantSearchPage.this, null), "enrollmentId", "enrollmentId"));
       }
       columns.add(new PropertyColumn<Participant>(new StringResourceModel("ParticipantCode", ParticipantSearchPage.this, null), "barcode", "barcode"));
-      columns.add(new PropertyColumn<Participant>(new StringResourceModel("LastName", ParticipantSearchPage.this, null), "lastName", "lastName"));
+ //     columns.add(new PropertyColumn<Participant>(new StringResourceModel("LastName", ParticipantSearchPage.this, null), "lastName", "lastName"));
       columns.add(new PropertyColumn<Participant>(new StringResourceModel("FirstName", ParticipantSearchPage.this, null), "firstName", "firstName"));
       columns.add(new AbstractColumn<Participant>(new StringResourceModel("Appointment", ParticipantSearchPage.this, null), "appointment.date") {
 

@@ -1,0 +1,38 @@
+﻿C00;lavio  
+C01-02;lengua
+C03-06;cavidad oral
+C07-08;glandulas salivales
+C09-14;faringe
+C15;esofago
+C16;estomago
+C17;intestino delgado
+C18;colon
+C19-21;recto y ano
+C22;higado y conductos biliares intrahepaticos
+C23-24;vesicula biliar y tracto biliar                                                                
+C25;pancreas
+C30-31;nariz y sinus nasal
+C32;laringe
+C33-34;pulmon, traquea y bronquios
+C40-41;hueso y cartilago
+C43;melanoma maligno de piel
+C44;otras neoplasias de la piel
+C47-49;nervios perifericos, tejido conectivo y blando
+C50;mama
+C51,52,55,57-59;vulva, vagina, placenta y organos genitales femeninos no especificados
+C53;cervix
+C54;cuerpo uterino
+C56;ovario
+C60;penis
+C61;prostata
+C62;testiculo
+C64;riñon y otros organos urinarios
+C67;bufeta urinaria
+C69;ojo
+C70-72;cerebro y sistema nervioso central
+C73;tiroide
+C74-75;otras glandulas endocrinas
+C81;enfermedad de Hodgkin
+C82-85,C96;limfoma no hodgkin
+C88-C90;mieloma multiple
+C91-95;leucemia

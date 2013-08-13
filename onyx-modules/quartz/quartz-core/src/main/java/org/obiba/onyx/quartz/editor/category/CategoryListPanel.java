@@ -65,13 +65,6 @@ import org.obiba.onyx.quartz.editor.widget.sortable.SortableList;
 import org.obiba.onyx.wicket.Images;
 import org.obiba.onyx.wicket.reusable.FeedbackWindow;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.ListMultimap;
-import com.google.common.collect.Multimap;
-
-import static java.text.Normalizer.normalize;
 import static org.apache.commons.lang.StringUtils.abbreviate;
 import static org.apache.commons.lang.StringUtils.equalsIgnoreCase;
 

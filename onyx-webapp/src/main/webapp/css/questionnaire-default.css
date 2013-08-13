@@ -6,3 +6,40 @@
 
 @import url("questionnaire-default-obiba.css");
 
+.checkbox-open {
+
+}
+
+.question {
+  font-size: 1.3em;
+}
+
+.question.category.label {
+  font-size: 1.2em;
+}
+
+.question.instructions {
+  font-size: 1.2em;
+}
+
+.question.label.label-open {
+  font-size: 1.2em;
+}
+
+.question.category.label {
+  font-size: 1.2em;
+}
+
+input, select, textarea {
+  font-size: 0.9em;
+}
+
+table.array tr.ui-widget-header {
+  background: none repeat scroll 0 0 #7D9DFF;
+}
+
+.categories td.category {
+	padding-right:0.2500em;
+	padding-bottom:0.2500em;
+	min-width:13.3333em;
+}

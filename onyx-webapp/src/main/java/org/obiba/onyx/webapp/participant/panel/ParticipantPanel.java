@@ -71,7 +71,7 @@ public class ParticipantPanel extends Panel {
 
     if(participant.getRecruitmentType().equals(RecruitmentType.ENROLLED) && !shortList) attributesToDisplay.add(participantMetadata.getEssentialAttribute(ParticipantMetadata.ENROLLMENT_ID_ATTRIBUTE_NAME));
     if(participant.getBarcode() != null) attributesToDisplay.add(participantMetadata.getEssentialAttribute(ParticipantMetadata.PARTICIPANT_ID));
-    attributesToDisplay.add(participantMetadata.getEssentialAttribute(ParticipantMetadata.LAST_NAME_ATTRIBUTE_NAME));
+//    attributesToDisplay.add(participantMetadata.getEssentialAttribute(ParticipantMetadata.LAST_NAME_ATTRIBUTE_NAME));
     attributesToDisplay.add(participantMetadata.getEssentialAttribute(ParticipantMetadata.FIRST_NAME_ATTRIBUTE_NAME));
 
     if(!shortList) {

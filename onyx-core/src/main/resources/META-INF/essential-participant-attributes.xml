@@ -4,7 +4,7 @@
     <assignableAtEnrollment>true</assignableAtEnrollment>
     <mandatoryAtEnrollment>true</mandatoryAtEnrollment>
     <mandatoryAtReception>true</mandatoryAtReception>
-    <editableAtReception>false</editableAtReception>
+    <editableAtReception>true</editableAtReception>
     <editableAfterReception>false</editableAfterReception>
     <type>TEXT</type>
   </attribute>

@@ -1,0 +1,254 @@
+<destinations>
+
+    <destination>
+        <name>DCC</name>
+        <!-- Export in CSV with provided options -->
+        <options>
+            <format>CSV</format>
+            <characterSet>ISO-8859-1</characterSet>
+            <separator>,</separator>
+            <quote>"</quote>
+        </options>
+
+
+        <valueset entityType="Participant" valueTable="Participants">
+            <entities>
+                <excludeAll />
+                <script type="INCLUDE">
+                    <javascript><![CDATA[// Include any ValueSet that has 'CLOSED' or 'COMPLETED' as a value for the 'Participant.Interview.Status' variable
+              $('Participants:Admin.Interview.status').any('CLOSED','COMPLETED')]]></javascript>
+                </script>
+                <script type="EXCLUDE">
+                    <javascript><![CDATA[$('Participants:Admin.Interview.exportLog.destination').any('DCC.Participants')]]></javascript>
+                </script>
+            </entities>
+            <variables>
+                <variableName type="EXCLUDE" prefix="Admin.Participant" />
+                <variableName type="INCLUDE" prefix="Admin.Participant.barcode" />
+                <variableName type="INCLUDE" prefix="Admin.Participant.PostalCodePrefix" />
+            </variables>
+        </valueset>
+
+        <valueset entityType="Participant" valueTable="Consentimiento">
+            <entities>
+                <excludeAll />
+                <script type="INCLUDE">
+                    <javascript><![CDATA[// Include any ValueSet that has 'CLOSED' or 'COMPLETED' as a value for the 'Participant.Interview.Status' variable
+          $('Participants:Admin.Interview.status').any('CLOSED','COMPLETED')]]></javascript>
+                </script>
+                <script type="EXCLUDE">
+                    <javascript><![CDATA[$('Participants:Admin.Interview.exportLog.destination').any('DCC.Consentimiento')]]></javascript>
+                </script>
+            </entities>
+            <variables>
+                <variableName type="EXCLUDE" prefix="Consent.pdfForm" />
+            </variables>
+        </valueset>
+
+        <valueset entityType="Participant" valueTable="Extraccion">
+            <entities>
+                <excludeAll />
+                <script type="INCLUDE">
+                    <javascript><![CDATA[// Include any ValueSet that has 'CLOSED' or 'COMPLETED' as a value for the 'Participant.Interview.Status' variable
+           $('Participants:Admin.Interview.status').any('CLOSED','COMPLETED')]]></javascript>
+                </script>
+                <script type="EXCLUDE">
+                    <javascript><![CDATA[$('Participants:Admin.Interview.exportLog.destination').any('DCC.Extraccion')]]></javascript>
+                </script>
+            </entities>
+            <variables>
+                <variableAttribute type="EXCLUDE">
+                    <attribute>exclusiveChoiceCategoryVariable</attribute>
+                    <value>true</value>
+                </variableAttribute>
+            </variables>
+        </valueset>
+
+        <!--      <valueset entityType="Participant" valueTable="GCAT"> -->
+        <!--       <entities> -->
+        <!--         <excludeAll /> -->
+        <!--         <script type="INCLUDE"> -->
+        <!--           <javascript><![CDATA[// Include any ValueSet that has 'CLOSED' or 'COMPLETED' as a value for the 'Participant.Interview.Status' variable -->
+        <!--            $('Participants:Admin.Interview.status').any('CLOSED','COMPLETED')]]></javascript>  -->
+        <!--         </script> -->
+        <!--         <script type="EXCLUDE"> -->
+        <!--           <javascript><![CDATA[$('Participants:Admin.Interview.exportLog.destination').any('DCC.GCAT')]]></javascript> -->
+        <!--         </script> -->
+        <!--       </entities> -->
+        <!--       <variables> -->
+        <!-- 	    <variableAttribute type="EXCLUDE"> -->
+        <!--           <attribute>exclusiveChoiceCategoryVariable</attribute> -->
+        <!--           <value>true</value> -->
+        <!--         </variableAttribute>  -->
+        <!--       </variables>		   -->
+        <!--     </valueset>	 -->
+
+        <valueset entityType="Participant" valueTable="Mostres">
+            <entities>
+                <excludeAll />
+                <script type="INCLUDE">
+                    <javascript><![CDATA[// Include any ValueSet that has 'CLOSED' or 'COMPLETED' as a value for the 'Participant.Interview.Status' variable
+          $('Participants:Admin.Interview.status').any('CLOSED','COMPLETED')]]></javascript>
+                </script>
+                <script type="EXCLUDE">
+                    <javascript><![CDATA[$('Participants:Admin.Interview.exportLog.destination').any('DCC.Mostres')]]></javascript>
+                </script>
+            </entities>
+            <variables>
+                <variableAttribute type="EXCLUDE">
+                    <attribute>exclusiveChoiceCategoryVariable</attribute>
+                    <value>true</value>
+                </variableAttribute>
+            </variables>
+        </valueset>
+        <!--
+          <valueset entityType="Participant" valueTable="Medidas">
+       <entities>
+         <excludeAll />
+         <script type="INCLUDE">
+           <javascript><![CDATA[// Include any ValueSet that has 'CLOSED' or 'COMPLETED' as a value for the 'Participant.Interview.Status' variable
+            $('Participants:Admin.Interview.status').any('CLOSED','COMPLETED')]]></javascript>
+         </script>
+         <script type="EXCLUDE">
+           <javascript><![CDATA[$('Participants:Admin.Interview.exportLog.destination').any('DCC.Medidas')]]></javascript>
+         </script>
+       </entities>
+       <variables>
+         <variableAttribute type="EXCLUDE">
+           <attribute>exclusiveChoiceCategoryVariable</attribute>
+           <value>true</value>
+         </variableAttribute>
+       </variables>
+     </valueset>	-->
+
+        <!--    <valueset entityType="Participant" valueTable="ConclusionQuestionnaire"> -->
+        <!--      <entities> -->
+        <!--        <excludeAll /> -->
+        <!--        <script type="INCLUDE"> -->
+        <!--          <javascript><![CDATA[// Include any ValueSet that has 'CLOSED' or 'COMPLETED' as a value for the 'Participant.Interview.Status' variable -->
+        <!--          $('Participants:Admin.Interview.status').any('CLOSED','COMPLETED')]]></javascript> -->
+        <!--        </script> -->
+        <!--        <script type="EXCLUDE"> -->
+        <!--          <javascript><![CDATA[$('Participants:Admin.Interview.exportLog.destination').any('DCC.ConclusionQuestionnaire')]]></javascript> -->
+        <!--        </script> -->
+        <!--      </entities> -->
+        <!--      <variables> -->
+        <!--        <variableAttribute type="EXCLUDE"> -->
+        <!--          <attribute>exclusiveChoiceCategoryVariable</attribute> -->
+        <!--          <value>true</value> -->
+        <!--        </variableAttribute> -->
+        <!--      </variables> -->
+        <!--    </valueset> -->
+
+    </destination>
+
+    <destination>
+        <name>Appointment Unit</name>
+        <valueset entityType="Participant" valueTable="Participants">
+            <entities>
+                <excludeAll />
+                <script type="INCLUDE">
+                    <javascript><![CDATA[// Include any ValueSet that has 'CLOSED' or 'COMPLETED' as a value for the 'Participant.Interview.Status' variable
+          $('Participants:Admin.Interview.status').any('CLOSED','COMPLETED')]]></javascript>
+                </script>
+                <script type="EXCLUDE">
+                    <javascript><![CDATA[$('Participants:Admin.Interview.exportLog.destination').any('Appointment Unit.Participants')]]></javascript>
+                </script>
+            </entities>
+            <variables>
+                <excludeAll />
+                <variableName type="INCLUDE" prefix="Admin.onyxVersion" />
+            </variables>
+        </valueset>
+
+        <valueset entityType="Participant" valueTable="Consent">
+            <entities>
+                <excludeAll />
+                <script type="INCLUDE">
+                    <javascript><![CDATA[// Include any ValueSet that has 'CLOSED' or 'COMPLETED' as a value for the 'Participant.Interview.Status' variable
+          $('Participants:Admin.Interview.status').any('CLOSED','COMPLETED')]]></javascript>
+                </script>
+                <script type="EXCLUDE">
+                    <javascript><![CDATA[$('Participants:Admin.Interview.exportLog.destination').any('Appointment Unit.Consent')]]></javascript>
+                </script>
+            </entities>
+            <variables>
+                <excludeAll />
+                <variableName type="INCLUDE" prefix="Consent" />
+                <variableName type="EXCLUDE" prefix="Consent.actions" />
+            </variables>
+        </valueset>
+    </destination>
+
+    <destination>
+        <name>Appointment Unit - Cancelled interviews</name>
+
+        <valueset entityType="Participant" valueTable="Participants">
+            <entities>
+                <excludeAll />
+                <script type="INCLUDE">
+                    <javascript><![CDATA[// Include any ValueSet that has 'CLOSED' or 'COMPLETED' as a value for the 'Participant.Interview.Status' variable
+          $('Participants:Admin.Interview.status').any('CANCELLED')]]></javascript>
+                </script>
+                <script type="EXCLUDE">
+                    <javascript><![CDATA[$('Participants:Admin.Interview.exportLog.destination').any('Appointment Unit - Cancelled interviews.Participants')]]></javascript>
+                </script>
+            </entities>
+            <variables>
+                <excludeAll />
+                <variableName type="INCLUDE" prefix="Admin.onyxVersion" />
+            </variables>
+        </valueset>
+
+        <valueset entityType="Participant" valueTable="Consent">
+            <entities>
+                <excludeAll />
+                <script type="INCLUDE">
+                    <javascript><![CDATA[// Include any ValueSet that has 'CLOSED' or 'COMPLETED' as a value for the 'Participant.Interview.Status' variable
+          $('Participants:Admin.Interview.status').any('CANCELLED')]]></javascript>
+                </script>
+                <script type="EXCLUDE">
+                    <javascript><![CDATA[$('Participants:Admin.Interview.exportLog.destination').any('Appointment Unit - Cancelled interviews.Consent')]]></javascript>
+                </script>
+            </entities>
+            <variables>
+                <excludeAll />
+                <variableName type="INCLUDE" prefix="Consent" />
+                <variableName type="EXCLUDE" prefix="Consent.actions" />
+            </variables>
+        </valueset>
+    </destination>
+
+    <destination>
+        <name>DCCBin</name>
+
+        Export in CSV with provided options
+        <options>
+            <format>CSV</format>
+            <characterSet>ISO-8859-1</characterSet>
+            <separator>,</separator>
+            <quote>"</quote>
+        </options>
+
+        <valueset entityType="Participant" valueTable="QuartzDemoQuestionnaire">
+            <entities>
+                <excludeAll />
+                <script type="INCLUDE">
+                    <javascript><![CDATA[// Include any ValueSet that has 'CLOSED' or 'COMPLETED' as a value for the 'Participant.Interview.Status' variable
+           $('Participants:Admin.Interview.status').any('CLOSED','COMPLETED')]]></javascript>
+                </script>
+                <script type="EXCLUDE">
+                    <javascript><![CDATA[$('Participants:Admin.Interview.exportLog.destination').any('DCCBin.QuartzDemoQuestionnaire')]]></javascript>
+                </script>
+            </entities>
+            <variables>
+                <variableAttribute type="EXCLUDE">
+                    <attribute>exclusiveChoiceCategoryVariable</attribute>
+                    <value>true</value>
+                </variableAttribute>
+            </variables>
+        </valueset>
+
+    </destination>
+
+</destinations>
