@@ -40,6 +40,7 @@ public abstract class AjaxLanguageChoicePanel extends Panel {
   public AjaxLanguageChoicePanel(String id, IModel header) {
     this(id, header, Arrays.asList(new Locale[] { Locale.FRENCH, Locale.ENGLISH, new Locale("ca"), new Locale("es", "ES") }));
   }
+
   /**
    * Constructor with a given language list.
    * @param id
