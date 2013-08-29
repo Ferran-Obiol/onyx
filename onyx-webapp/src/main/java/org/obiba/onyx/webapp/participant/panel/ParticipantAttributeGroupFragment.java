@@ -13,40 +13,40 @@ import org.obiba.onyx.util.data.Data;
 
 public abstract class ParticipantAttributeGroupFragment extends Fragment {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  public ParticipantAttributeGroupFragment(String id, IModel<Participant> participantModel, Group group, Panel parentPanel, List<ParticipantAttribute> attributesToDisplay) {
-    super(id, "attributeGroupFragment", parentPanel);
+    public ParticipantAttributeGroupFragment(String id, IModel<Participant> participantModel, Group group, Panel parentPanel, List<ParticipantAttribute> attributesToDisplay) {
+        super(id, "attributeGroupFragment", parentPanel);
 
-    RepeatingView repeat = new RepeatingView("attributeRepeater");
-    add(repeat);
+        RepeatingView repeat = new RepeatingView("attributeRepeater");
+        add(repeat);
 
-    Participant participant = participantModel.getObject();
+        Participant participant = participantModel.getObject();
 
-    for(final ParticipantAttribute attribute : group.getParticipantAttributes()) {
-      if(attributesToDisplay.contains(attribute)) {
-        addParticipantAttribute(attribute, repeat, participant);
-      }
+        for(ParticipantAttribute attribute : group.getParticipantAttributes()) {
+            if(attributesToDisplay.contains(attribute)) {
+                addParticipantAttribute(attribute, repeat, participant);
+            }
+        }
     }
-  }
 
-  public String getAttributeValueAsString(Participant participant, String attributeName) {
-    Data attributeValue = getAttributeValue(participant, attributeName);
-    if(attributeValue != null) {
-      return attributeValue.getValueAsString();
+    public String getAttributeValueAsString(Participant participant, String attributeName) {
+        Data attributeValue = getAttributeValue(participant, attributeName);
+        if(attributeValue != null) {
+            return attributeValue.getValueAsString();
+        }
+        return null;
     }
-    return null;
-  }
 
-  public Data getAttributeValue(Participant participant, String attributeName) {
-    Data attributeValue = participant.getEssentialAttributeValue(attributeName);
-    if(attributeValue == null) {
-      attributeValue = participant.getConfiguredAttributeValue(attributeName);
+    public Data getAttributeValue(Participant participant, String attributeName) {
+        Data attributeValue = participant.getEssentialAttributeValue(attributeName);
+        if(attributeValue == null) {
+            attributeValue = participant.getConfiguredAttributeValue(attributeName);
+        }
+        return attributeValue;
     }
-    return attributeValue;
-  }
 
-  abstract protected void
-      addParticipantAttribute(ParticipantAttribute attribute, RepeatingView repeat, Participant participant);
+    abstract protected void
+    addParticipantAttribute(ParticipantAttribute attribute, RepeatingView repeat, Participant participant);
 
 }

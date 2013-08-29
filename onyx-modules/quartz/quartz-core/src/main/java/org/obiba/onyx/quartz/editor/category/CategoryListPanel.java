@@ -65,6 +65,13 @@ import org.obiba.onyx.quartz.editor.widget.sortable.SortableList;
 import org.obiba.onyx.wicket.Images;
 import org.obiba.onyx.wicket.reusable.FeedbackWindow;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.ListMultimap;
+import com.google.common.collect.Multimap;
+
+import static java.text.Normalizer.normalize;
 import static org.apache.commons.lang.StringUtils.abbreviate;
 import static org.apache.commons.lang.StringUtils.equalsIgnoreCase;
 
@@ -74,149 +81,158 @@ import static org.apache.commons.lang.StringUtils.equalsIgnoreCase;
 @SuppressWarnings("serial")
 public class CategoryListPanel extends Panel {
 
-    // private final transient Logger logger = LoggerFactory.getLogger(getClass());
+  // private final transient Logger logger = LoggerFactory.getLogger(getClass());
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SE_BAD_FIELD",
-            justification = "Need to be be re-initialized upon deserialization")
-    @SpringBean
-    private LocalePropertiesUtils localePropertiesUtils;
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SE_BAD_FIELD",
+      justification = "Need to be be re-initialized upon deserialization")
+  @SpringBean
+  private LocalePropertiesUtils localePropertiesUtils;
 
-    private final ModalWindow categoryWindow;
+  private final ModalWindow categoryWindow;
 
-    private final FeedbackPanel feedbackPanel;
+  private final FeedbackPanel feedbackPanel;
 
-    private final FeedbackWindow feedbackWindow;
+  private final FeedbackWindow feedbackWindow;
 
-    private SortableList<QuestionCategory> categoryList;
+  private SortableList<QuestionCategory> categoryList;
 
-    private final Multimap<Category, Question> questionsByCategory;
+  private final Multimap<Category, Question> questionsByCategory;
 
-    private final List<Category> questionnaireCategories;
+  private final List<Category> questionnaireCategories;
 
-    private final IModel<Questionnaire> questionnaireModel;
+  private final IModel<Questionnaire> questionnaireModel;
 
-    private final IModel<LocaleProperties> localePropertiesModel;
+  private final IModel<LocaleProperties> localePropertiesModel;
 
-    private final Panel parentPanel;
+  private final Panel parentPanel;
 
-    public CategoryListPanel(String id, IModel<EditedQuestion> model, final IModel<Questionnaire> questionnaireModel,
-                             final IModel<LocaleProperties> localePropertiesModel, FeedbackPanel feedbackPanel, FeedbackWindow feedbackWindow,
-                             Panel parentPanel) {
-        super(id, model);
-        this.questionnaireModel = questionnaireModel;
-        this.localePropertiesModel = localePropertiesModel;
-        this.feedbackPanel = feedbackPanel;
-        this.feedbackWindow = feedbackWindow;
-        this.parentPanel = parentPanel;
+  public CategoryListPanel(String id, IModel<EditedQuestion> model, final IModel<Questionnaire> questionnaireModel,
+      final IModel<LocaleProperties> localePropertiesModel, FeedbackPanel feedbackPanel, FeedbackWindow feedbackWindow,
+      Panel parentPanel) {
+    super(id, model);
+    this.questionnaireModel = questionnaireModel;
+    this.localePropertiesModel = localePropertiesModel;
+    this.feedbackPanel = feedbackPanel;
+    this.feedbackWindow = feedbackWindow;
+    this.parentPanel = parentPanel;
 
-        add(CSSPackageResource.getHeaderContribution(CategoryListPanel.class, "CategoryListPanel.css"));
+    add(CSSPackageResource.getHeaderContribution(CategoryListPanel.class, "CategoryListPanel.css"));
 
-        final Question question = model.getObject().getElement();
+    final Question question = model.getObject().getElement();
 
-        QuestionnaireFinder questionnaireFinder = QuestionnaireFinder.getInstance(questionnaireModel.getObject());
-        questionnaireModel.getObject().setQuestionnaireCache(null);
-        questionsByCategory = questionnaireFinder.findQuestionsByCategory();
-        questionnaireCategories = new ArrayList<Category>(questionsByCategory.keySet());
-        Collections.sort(questionnaireCategories, new CategoryByQuestionsComparator(questionsByCategory));
+    QuestionnaireFinder questionnaireFinder = QuestionnaireFinder.getInstance(questionnaireModel.getObject());
+    questionnaireModel.getObject().setQuestionnaireCache(null);
+    questionsByCategory = questionnaireFinder.findQuestionsByCategory();
+    questionnaireCategories = new ArrayList<Category>(questionsByCategory.keySet());
+    Collections.sort(questionnaireCategories, new CategoryByQuestionsComparator(questionsByCategory));
 
-        categoryWindow = new ModalWindow("categoryWindow");
-        categoryWindow.setCssClassName("onyx");
-        categoryWindow.setInitialWidth(950);
-        categoryWindow.setInitialHeight(550);
-        categoryWindow.setResizable(true);
-        categoryWindow.setTitle(new ResourceModel("Category"));
-        add(categoryWindow);
+    categoryWindow = new ModalWindow("categoryWindow");
+    categoryWindow.setCssClassName("onyx");
+    categoryWindow.setInitialWidth(950);
+    categoryWindow.setInitialHeight(550);
+    categoryWindow.setResizable(true);
+    categoryWindow.setTitle(new ResourceModel("Category"));
+    add(categoryWindow);
 
-        List<ITab> tabs = new ArrayList<ITab>();
-        tabs.add(new AbstractTab(new ResourceModel("Add.simple")) {
-            @Override
-            public Panel getPanel(String panelId) {
-                return new SimpleAddPanel(panelId);
-            }
-        });
-        tabs.add(new AbstractTab(new ResourceModel("Add.bulk")) {
-            @Override
-            public Panel getPanel(String panelId) {
-                return new BulkAddPanel(panelId);
-            }
-        });
-        tabs.add(new AbstractTab(new ResourceModel("Add.existing")) {
-            @Override
-            public Panel getPanel(String panelId) {
-                return new AddExistingPanel(panelId);
-            }
-        });
-        add(new AjaxTabbedPanel("addTabs", tabs));
+    List<ITab> tabs = new ArrayList<ITab>();
+    tabs.add(new AbstractTab(new ResourceModel("Add.simple")) {
+      @Override
+      public Panel getPanel(String panelId) {
+        return new SimpleAddPanel(panelId);
+      }
+    });
+    tabs.add(new AbstractTab(new ResourceModel("Add.bulk")) {
+      @Override
+      public Panel getPanel(String panelId) {
+        return new BulkAddPanel(panelId);
+      }
+    });
+    tabs.add(new AbstractTab(new ResourceModel("Add.existing")) {
+      @Override
+      public Panel getPanel(String panelId) {
+        return new AddExistingPanel(panelId);
+      }
+    });
+    add(new AjaxTabbedPanel("addTabs", tabs));
 
-        categoryList = new SortableList<QuestionCategory>("categories", question.getQuestionCategories()) {
+    categoryList = new SortableList<QuestionCategory>("categories", question.getQuestionCategories()) {
 
-            @Override
-            public void onItemPopulation(QuestionCategory questionCategory) {
-            }
+      @Override
+      public void onItemPopulation(QuestionCategory questionCategory) {
+      }
 
-            @Override
-            public Component getItemTitle(@SuppressWarnings("hiding") String id, QuestionCategory questionCategory) {
-                Category category = questionCategory.getCategory();
+      @Override
+      public Component getItemTitle(@SuppressWarnings("hiding") String id, QuestionCategory questionCategory) {
+        Category category = questionCategory.getCategory();
 
-                if(QuestionnaireSharedCategory.isSharedIfLink(questionCategory, questionnaireModel.getObject())) {
-                    StringBuilder sb = new StringBuilder();
-                    for(Question q : questionsByCategory.get(category)) {
-                        if(q.getName().equals(question.getName())) continue;
-                        if(sb.length() > 0) sb.append(", ");
-                        sb.append(q.getName());
-                    }
-                    String shared = " <span class=\"shared\">" + new StringResourceModel("sharedWith", CategoryListPanel.this,
-                            null, new Object[] { abbreviate(sb.toString(), 50) }).getString() + "</span>";
-                    return new Label(id, category.getName() + shared).setEscapeModelStrings(false);
+        if(QuestionnaireSharedCategory.isSharedIfLink(questionCategory, questionnaireModel.getObject())) {
+          StringBuilder sb = new StringBuilder();
+          for(Question q : questionsByCategory.get(category)) {
+            if(q.getName().equals(question.getName())) continue;
+            if(sb.length() > 0) sb.append(", ");
+            sb.append(q.getName());
+          }
+          String shared = " <span class=\"shared\">" + new StringResourceModel("sharedWith", CategoryListPanel.this,
+              null, new Object[] { abbreviate(sb.toString(), 50) }).getString() + "</span>";
+          return new Label(id, category.getName() + shared).setEscapeModelStrings(false);
+        }
+        return new Label(id, category.getName());
+      }
+
+      @Override
+      public void editItem(final QuestionCategory questionCategory, AjaxRequestTarget target) {
+        final ElementClone<QuestionCategory> original = QuestionnaireElementCloner
+            .clone(questionCategory, new CloneSettings(true), localePropertiesModel.getObject());
+        categoryWindow.setContent(
+            new CategoryWindow("content", new Model<QuestionCategory>(questionCategory), questionnaireModel,
+                localePropertiesModel, categoryWindow) {
+              @Override
+              public void onSave(@SuppressWarnings("hiding") AjaxRequestTarget target,
+                  @SuppressWarnings("hiding") QuestionCategory questionCategory) {
+                Collection<QuestionCategory> others = findOtherQuestionCategories(questionCategory.getCategory(),
+                    questionCategory);
+                if(!others.isEmpty()) {
+                  LocaleProperties localeProperties = localePropertiesModel.getObject();
+                  ListMultimap<Locale, KeyValue> elementLabelsQC = localeProperties.getElementLabels(questionCategory);
+                  for(QuestionCategory other : others) {
+                    localePropertiesUtils.load(localeProperties, questionnaireModel.getObject(), other);
+                    ListMultimap<Locale, KeyValue> elementLabelsOtherQC = localeProperties.getElementLabels(other);
+                    copyLabels(elementLabelsQC, elementLabelsOtherQC);
+                  }
                 }
-                return new Label(id, category.getName());
-            }
+              }
 
-            @Override
-            public void editItem(final QuestionCategory questionCategory, AjaxRequestTarget target) {
-                final ElementClone<QuestionCategory> original = QuestionnaireElementCloner
-                        .clone(questionCategory, new CloneSettings(true), localePropertiesModel.getObject());
-                categoryWindow.setContent(
-                        new CategoryWindow("content", new Model<QuestionCategory>(questionCategory), questionnaireModel,
-                                localePropertiesModel, categoryWindow) {
-                            @Override
-                            public void onSave(@SuppressWarnings("hiding") AjaxRequestTarget target,
-                                               @SuppressWarnings("hiding") QuestionCategory questionCategory) {
-                                Collection<QuestionCategory> others = findOtherQuestionCategories(questionCategory.getCategory(),
-                                        questionCategory);
-                                if(!others.isEmpty()) {
-                                    LocaleProperties localeProperties = localePropertiesModel.getObject();
-                                    ListMultimap<Locale, KeyValue> elementLabelsQC = localeProperties.getElementLabels(questionCategory);
-                                    for(QuestionCategory other : others) {
-                                        localePropertiesUtils.load(localeProperties, questionnaireModel.getObject(), other);
-                                        ListMultimap<Locale, KeyValue> elementLabelsOtherQC = localeProperties.getElementLabels(other);
-                                        copyLabels(elementLabelsQC, elementLabelsOtherQC);
-                                    }
-                                }
-                            }
+              @Override
+              public void onCancel(@SuppressWarnings("hiding") AjaxRequestTarget target,
+                  QuestionCategory questionCategory) {
+                rollback(questionCategory, original);
+              }
+            });
+        categoryWindow.setCloseButtonCallback(new CloseButtonCallback() {
+          @Override
+          public boolean onCloseButtonClicked(@SuppressWarnings("hiding") AjaxRequestTarget target) {
+            rollback(questionCategory, original);
+            return true;
+          }
+        });
+        categoryWindow.setWindowClosedCallback(new WindowClosedCallback() {
+          @Override
+          public void onClose(@SuppressWarnings("hiding") AjaxRequestTarget target) {
+            refreshList(target);
+            refreshListAndNoAnswerPanel(categoryList, target);
+          }
+        });
+        categoryWindow.show(target);
+      }
 
-                            @Override
-                            public void onCancel(@SuppressWarnings("hiding") AjaxRequestTarget target,
-                                                 QuestionCategory questionCategory) {
-                                rollback(questionCategory, original);
-                            }
-                        });
-                categoryWindow.setCloseButtonCallback(new CloseButtonCallback() {
-                    @Override
-                    public boolean onCloseButtonClicked(@SuppressWarnings("hiding") AjaxRequestTarget target) {
-                        rollback(questionCategory, original);
-                        return true;
-                    }
-                });
-                categoryWindow.setWindowClosedCallback(new WindowClosedCallback() {
-                    @Override
-                    public void onClose(@SuppressWarnings("hiding") AjaxRequestTarget target) {
-                        refreshList(target);
-                        refreshListAndNoAnswerPanel(categoryList, target);
-                    }
-                });
-                categoryWindow.show(target);
-            }
+      @Override
+      @SuppressWarnings("unchecked")
+      public void deleteItem(QuestionCategory questionCategory, AjaxRequestTarget target) {
+        ((IModel<EditedQuestion>) CategoryListPanel.this.getDefaultModel()).getObject().getElement()
+            .getQuestionCategories().remove(questionCategory);
+        localePropertiesModel.getObject().remove(questionnaireModel.getObject(), questionCategory);
+        refreshListAndNoAnswerPanel(categoryList, target);
+      }
 
       @Override
       public Button[] getButtons() {
