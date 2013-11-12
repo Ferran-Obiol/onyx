@@ -77,8 +77,12 @@ public class AttributeValue extends AbstractEntity {
           break;
 
         case INTEGER:
-          integerValue = data.getValue();
-          break;
+            Object value = data.getValue();
+            if(value == null || value.getClass().isAssignableFrom(Long.class)) {
+              integerValue = (Long) value;
+            } else if(value.getClass().isAssignableFrom(Integer.class)) {
+             integerValue = ((Integer) data.getValue()).longValue();
+            }
 
         case DATE:
           dateValue = data.getValue();
